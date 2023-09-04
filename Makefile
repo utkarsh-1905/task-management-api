@@ -1,4 +1,4 @@
-all: start
+all: migrate start
 
 start:
 	@python manage.py runserver
