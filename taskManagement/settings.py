@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'user',
     'project',
-    'tasks'
+    'tasks',
 ]
 
 MIDDLEWARE = [
@@ -52,9 +52,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'middleware.time.NormalizeTime'
 ]
-
-# AUTH_USER_MODEL = "user.UserCustom"
 
 ROOT_URLCONF = 'taskManagement.urls'
 
