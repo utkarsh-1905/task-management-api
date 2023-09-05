@@ -24,7 +24,17 @@ class TasksSerializer(serializers.ModelSerializer):
                     "Project does not exist")
             return project
 
+    def validate(self, data):
+        print("validating", data)
+        if data['task_project'] is not None:
+            project = self.validate_task_project(
+                data['task_project'])
+            if project is not None:
+                data['task_project'] = project
+        return super().validate(data)
+
     def create(self, data):
+        print(data)
         task = Tasks(
             task_name=data['task_name'],
             task_description=data['task_description'],
@@ -37,3 +47,5 @@ class TasksSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tasks
         fields = '__all__'
+        read_only_fields = ['task_name', 'task_created_at',
+                            'task_creator', 'task_project']

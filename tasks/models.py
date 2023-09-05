@@ -20,7 +20,7 @@ class Tasks(models.Model):
     task_due_date = models.DateField(null=True, blank=True)
 
     REQUIRED_FIELDS = ['task_name', 'task_description',
-                       'task_project', 'task_creator']
+                       'task_project']
 
     # ? what will happen when either the assignee or reviewer is deleted?
     # ? what will happen when either user or project is deleted?

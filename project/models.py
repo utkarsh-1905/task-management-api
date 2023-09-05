@@ -10,6 +10,8 @@ class Project(models.Model):
         User, null=False, on_delete=models.CASCADE, related_name='projects')
     # add editable = false
 
+    REQUIRED_FIELDS = ['project_name']
+
     def __str__(self):
         return self.project_name
 
