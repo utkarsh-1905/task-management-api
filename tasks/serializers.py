@@ -25,7 +25,6 @@ class TasksSerializer(serializers.ModelSerializer):
             return project
 
     def validate(self, data):
-        print("validating", data)
         if data['task_project'] is not None:
             project = self.validate_task_project(
                 data['task_project'])
@@ -34,7 +33,6 @@ class TasksSerializer(serializers.ModelSerializer):
         return super().validate(data)
 
     def create(self, data):
-        print(data)
         task = Tasks(
             task_name=data['task_name'],
             task_description=data['task_description'],

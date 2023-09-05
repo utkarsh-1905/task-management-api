@@ -12,9 +12,9 @@ class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
         fields = '__all__'
+        read_only_fields = ['project_owner']
 
     def create(self, validated_data):
-        print(validated_data)
         project = Project(
             project_name=validated_data['project_name'],
             project_description=validated_data['project_description'],
