@@ -22,13 +22,10 @@ class Tasks(models.Model):
     REQUIRED_FIELDS = ['task_name', 'task_description',
                        'task_project']
 
-    # ? what will happen when either the assignee or reviewer is deleted?
-    # ? what will happen when either user or project is deleted?
     # only the creator can add an assignee and reviewers
     # the creator can change the assignee and reviewers
     # the creator can change the due date
 
-    # used to give the model object a name
     def __str__(self):
         return self.task_name
 

@@ -9,7 +9,6 @@ class TasksSerializer(serializers.ModelSerializer):
     task_creator = UserSerializer()
     task_reviewer = UserSerializer(many=True)
     task_assignee = UserSerializer()
-    # ? can owner change the assignee?
     task_project = ProjectSerializer()
 
     def validate_task_project(self, project):
