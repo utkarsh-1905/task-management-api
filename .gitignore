@@ -2,3 +2,6 @@ db.sqlite3
 NOTES.md
 **/__pycache__/**
 **/migrations/**
+htmlcov/
+.coverage
+.pytest_cache/

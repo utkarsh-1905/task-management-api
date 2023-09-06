@@ -8,6 +8,8 @@ class UserSerializer(serializers.ModelSerializer):
         exclude = ["last_login", "is_staff",
                    "is_superuser", "groups", "user_permissions", "is_active", "date_joined"]
         extra_kwargs = {'password': {'write_only': True}}
+        required_fields = ['username', 'email',
+                           'first_name', 'last_name', 'password']
         # this lets password appear only when a post request is send to the server
         # the password is not send in a read request/GET request
 
