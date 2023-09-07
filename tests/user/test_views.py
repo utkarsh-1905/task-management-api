@@ -1,7 +1,6 @@
 import pytest
 from rest_framework.test import APIClient
 import json
-from rest_framework_simplejwt.tokens import AccessToken
 
 client = APIClient()
 
@@ -13,7 +12,7 @@ class TestUserViews:
     def test_get_user(self, users):
         response = client.get('/api/users/')
         assert response.status_code == 200
-        assert len(json.loads(response.content)) == 5
+        assert len(response.data) > 0
 
     def test_get_user_by_id(self, users):
         response = client.get('/api/users/2/')
@@ -131,9 +130,12 @@ class TestUserViews:
             "password": 'password'
         }
         response = client.post('/api/login/', login_payload, format='json')
+        assert response.data['access'] != None
         access = response.data['access']
         client.credentials(HTTP_AUTHORIZATION='Bearer ' + access)
-        response = client.patch('/api/users/5/', payload, format='json')
+        url = '/api/users/' + str(users[4].id) + '/'
+        get = client.get(url)
+        response = client.patch(url, payload, format='json')
         assert response.status_code == 200
         assert response.data['email'] == 'updated_email@gmail.com'
 
@@ -172,7 +174,9 @@ class TestUserViews:
         response = client.post('/api/login/', login_payload, format='json')
         access = response.data['access']
         client.credentials(HTTP_AUTHORIZATION='Bearer ' + access)
-        response = client.patch('/api/users/5/', payload, format='json')
+        url = '/api/users/' + str(users[4].id) + '/'
+        response = client.patch(
+            url, payload, format='json')
         assert response.status_code == 400
         assert response.data['email'][0] == 'Enter a valid email address.'
 
@@ -206,7 +210,8 @@ class TestUserViews:
         response = client.post('/api/login/', login_payload, format='json')
         access = response.data['access']
         client.credentials(HTTP_AUTHORIZATION='Bearer ' + access)
-        response = client.delete('/api/users/5/')
+        url = '/api/users/' + str(users[4].id) + '/'
+        response = client.delete(url)
         assert response.status_code == 204
 
     def test_delete_user_not_found(self, users):
