@@ -1,6 +1,5 @@
 import pytest
 from rest_framework.test import APIClient
-import json
 
 client = APIClient()
 
@@ -92,7 +91,7 @@ class TestUserViews:
         }
         response = client.post('/api/login/', login, format='json')
         assert response.status_code == 200
-        assert response.data['access'] != None
+        assert response.data['access'] is not None
 
     def test_login_user_with_invalid_password(self, users):
         u = users[2]
@@ -130,11 +129,11 @@ class TestUserViews:
             "password": 'password'
         }
         response = client.post('/api/login/', login_payload, format='json')
-        assert response.data['access'] != None
+        assert response.data['access'] is not None
         access = response.data['access']
         client.credentials(HTTP_AUTHORIZATION='Bearer ' + access)
         url = '/api/users/' + str(users[4].id) + '/'
-        get = client.get(url)
+        client.get(url)
         response = client.patch(url, payload, format='json')
         assert response.status_code == 200
         assert response.data['email'] == 'updated_email@gmail.com'
@@ -186,7 +185,7 @@ class TestUserViews:
             "password": 'password'
         }
         response = client.post('/api/login/', login_payload, format='json')
-        assert response.data['access'] != None
+        assert response.data['access'] is not None
         access = response.data['access']
         payload = {
             "email": "updated_email@gmail.com",
@@ -232,7 +231,7 @@ class TestUserViews:
             "password": 'password'
         }
         response = client.post('/api/login/', login_payload, format='json')
-        assert response.data['access'] != None
+        assert response.data['access'] is not None
         access = response.data['access']
         client.credentials(HTTP_AUTHORIZATION='Bearer ' + access)
         response = client.delete('/api/users/3/')

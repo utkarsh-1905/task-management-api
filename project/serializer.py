@@ -1,8 +1,6 @@
 from rest_framework import serializers
 from .models import Project
 from user.serializer import UserSerializer
-from django.contrib.auth.models import User
-from .models import Project
 
 
 class ProjectSerializer(serializers.ModelSerializer):

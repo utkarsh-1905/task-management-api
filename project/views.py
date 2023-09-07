@@ -19,4 +19,5 @@ class ProjectViewSet(viewsets.ModelViewSet):
         validated_data = project.validated_data
         validated_data['project_owner'] = request.user
         p = project.create(validated_data, *args, **kwargs)
-        return response.Response(self.get_serializer(p).data, status=status.HTTP_201_CREATED)
+        return response.Response(self.get_serializer(p).data,
+                                 status=status.HTTP_201_CREATED)

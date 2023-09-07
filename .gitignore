@@ -6,3 +6,4 @@ htmlcov/
 .coverage
 .pytest_cache/
 report.html
+.ruff_cache/

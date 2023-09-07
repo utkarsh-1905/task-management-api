@@ -1,4 +1,4 @@
-from rest_framework import viewsets, filters, permissions
+from rest_framework import viewsets, filters
 from django.contrib.auth.models import User
 from .serializer import UserSerializer
 from .permissions import CanModify

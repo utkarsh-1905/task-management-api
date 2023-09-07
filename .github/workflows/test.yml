@@ -7,6 +7,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{steps.deployment.outputs.page_url}}
     strategy:
       matrix:
         python-version: ["3.11"]
@@ -36,3 +39,11 @@ jobs:
           name: pytest-report
           path: report.html
         if: ${{ always()}}
+      - name: Upload to pages artifacts
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: report.html
+        if: ${{ always()}}
+      - name: Deploy to Github Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
