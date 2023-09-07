@@ -8,8 +8,7 @@ migrate:
 	@python manage.py migrate
 
 test:
-	@coverage run -m pytest -s --pikachu
+	@pytest -s --pikachu -rA
 
 coverage:
-	@coverage report -m
-	@coverage html
+	@pytest --cov --pikachu
