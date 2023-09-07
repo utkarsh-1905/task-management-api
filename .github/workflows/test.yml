@@ -32,7 +32,7 @@ jobs:
         continue-on-error: true
       - name: Test with pytest
         run: |
-          pytest --html=report.html --self-contained-html
+          pytest --html=artifacts/report.html --self-contained-html
       - name: Upload Test Results
         uses: actions/upload-artifact@v3
         with:
@@ -42,7 +42,7 @@ jobs:
       - name: Upload to pages artifacts
         uses: actions/upload-pages-artifact@v2
         with:
-          path: report.html
+          path: artifacts/
         if: ${{ always()}}
       - name: Deploy to Github Pages
         id: deployment
