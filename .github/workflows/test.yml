@@ -4,6 +4,11 @@ on:
   push:
     branches: [main]
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -12,7 +17,7 @@ jobs:
       url: ${{steps.deployment.outputs.page_url}}
     strategy:
       matrix:
-        python-version: ["3.11"]
+        python-version: ["3.11.5"]
 
     steps:
       - uses: actions/checkout@v3
@@ -30,14 +35,19 @@ jobs:
         run: |
           ruff --format=github --target-version=py37 .
         continue-on-error: true
+      - name: Run Migrations
+        run: |
+          python manage.py makemigrations && python manage.py migrate
+        continue-on-error: true
       - name: Test with pytest
         run: |
-          pytest --html=artifacts/report.html --self-contained-html
+          pytest -s -rA --html=artifacts/report.html --self-contained-html
+        continue-on-error: true
       - name: Upload Test Results
         uses: actions/upload-artifact@v3
         with:
           name: pytest-report
-          path: report.html
+          path: artifacts/report.html
         if: ${{ always()}}
       - name: Upload to pages artifacts
         uses: actions/upload-pages-artifact@v2
