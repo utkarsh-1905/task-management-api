@@ -20,6 +20,9 @@ jobs:
         python-version: ["3.11.5"]
 
     steps:
+      - name: Set Timezone
+        run: |
+          sudo timedatectl set-timezone Asia/Kolkata
       - uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
@@ -41,14 +44,8 @@ jobs:
         continue-on-error: true
       - name: Test with pytest
         run: |
-          pytest -s -rA --html=artifacts/report.html --self-contained-html
+          pytest -s --html=artifacts/report.html --self-contained-html --cov
         continue-on-error: true
-      - name: Upload Test Results
-        uses: actions/upload-artifact@v3
-        with:
-          name: pytest-report
-          path: artifacts/report.html
-        if: ${{ always()}}
       - name: Upload to pages artifacts
         uses: actions/upload-pages-artifact@v2
         with:

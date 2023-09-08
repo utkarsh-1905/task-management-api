@@ -7,8 +7,8 @@ class Project(models.Model):
     project_description = models.CharField(max_length=200, null=True)
 
     project_owner = models.ForeignKey(
-        User, null=False, on_delete=models.CASCADE, related_name='projects')
-    # add editable = false
+        User, null=False, on_delete=models.CASCADE, related_name='projects', 
+        editable=False)
 
     REQUIRED_FIELDS = ['project_name']
 

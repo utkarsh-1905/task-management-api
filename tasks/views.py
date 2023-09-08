@@ -31,13 +31,16 @@ class TasksViewSet(ModelViewSet):
             data = request.data
             if data.get('task_creator') is not None:
                 return response.Response(
-                    {'error': 'You cannot change the task creator'}, status=status.HTTP_400_BAD_REQUEST)
+                    {'error': 'You cannot change the task creator'}, 
+                    status=status.HTTP_400_BAD_REQUEST)
             if data.get('task_project') is not None:
                 return response.Response(
-                    {'error': 'You cannot change the task project'}, status=status.HTTP_400_BAD_REQUEST)
+                    {'error': 'You cannot change the task project'}, 
+                    status=status.HTTP_400_BAD_REQUEST)
             if data.get('task_created_at') is not None:
                 return response.Response(
-                    {'error': 'You cannot change the default parameters'}, status=status.HTTP_400_BAD_REQUEST)
+                    {'error': 'You cannot change the default parameters'}, 
+                    status=status.HTTP_400_BAD_REQUEST)
             instance = self.get_object()
 
             # to update the assignee
@@ -45,7 +48,8 @@ class TasksViewSet(ModelViewSet):
                 assignee = User.objects.filter(id=data.get("task_assignee"))
                 if len(assignee) == 0:
                     return response.Response(
-                        {'error': 'User does not exist'}, status=status.HTTP_400_BAD_REQUEST)
+                        {'error': 'User does not exist'}, 
+                        status=status.HTTP_400_BAD_REQUEST)
                 instance.task_assignee = assignee[0]
 
             # to remove a reviewer
@@ -57,7 +61,8 @@ class TasksViewSet(ModelViewSet):
                         instance.task_reviewer.remove(u)
                     else:
                         return response.Response(
-                            {'error': '[Reviewers] User does not exist'}, status=status.HTTP_400_BAD_REQUEST)
+                            {'error': '[Reviewers] User does not exist'}, 
+                            status=status.HTTP_400_BAD_REQUEST)
                 instance.task_reviewer.set(reviewers)
 
             # to add a reviewer
@@ -69,7 +74,8 @@ class TasksViewSet(ModelViewSet):
                         instance.task_reviewer.add(u)
                     else:
                         return response.Response(
-                            {'error': '[Reviewers Add] User does not exist'}, status=status.HTTP_400_BAD_REQUEST)
+                            {'error': '[Reviewers Add] User does not exist'}, 
+                            status=status.HTTP_400_BAD_REQUEST)
                 instance.task_reviewer.set(reviewers)
 
             # to update the task
@@ -82,13 +88,16 @@ class TasksViewSet(ModelViewSet):
                         data['task_due_date'], '%Y-%m-%d').date()
                 except ValueError:
                     return response.Response(
-                        {'error': 'Invalid date format'}, status=status.HTTP_400_BAD_REQUEST)
+                        {'error': 'Invalid date format'}, 
+                        status=status.HTTP_400_BAD_REQUEST)
                 if due_date < timezone.now().date():
                     return response.Response(
-                        {'error': 'Due date cannot be in the past'}, status=status.HTTP_400_BAD_REQUEST)
+                        {'error': 'Due date cannot be in the past'}, 
+                        status=status.HTTP_400_BAD_REQUEST)
                 instance.task_due_date = due_date
             instance.task_updated_at = timezone.now()
             instance.save()
             return response.Response(self.get_serializer(instance).data)
         except Exception as e:
-            return response.Response({'detail': str(e)}, status=status.HTTP_401_UNAUTHORIZED)
+            return response.Response({'detail': str(e)}, 
+                                     status=status.HTTP_401_UNAUTHORIZED)
