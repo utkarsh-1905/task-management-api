@@ -21,10 +21,11 @@ class TasksViewSet(ModelViewSet):
     def create(self, request, *args, **kwargs):
         data = request.data
         task = TasksSerializer(data=data)
+        data['task_creator'] = request.user
         valid_data = task.validate(data)
-        valid_data['task_creator'] = request.user
         t = task.create(valid_data, *args, **kwargs)
-        return response.Response(self.get_serializer(t).data)
+        return response.Response(self.get_serializer(t).data, 
+                                status=status.HTTP_201_CREATED)
 
     def partial_update(self, request, pk=None):
         try:
@@ -82,7 +83,7 @@ class TasksViewSet(ModelViewSet):
             instance.task_name = data.get('task_name', instance.task_name)
             instance.task_description = data.get(
                 'task_description', instance.task_description)
-            if data['task_due_date'] is not None:
+            if data.get('task_due_date') is not None:
                 try:
                     due_date = datetime.strptime(
                         data['task_due_date'], '%Y-%m-%d').date()

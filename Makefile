@@ -14,4 +14,4 @@ coverage:
 	@pytest --cov --pikachu
 
 test-html:
-	@pytest --html=report.html --self-contained-html --cov
+	@pytest --html=report.html --self-contained-html --cov --pikachu
