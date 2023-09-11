@@ -17,6 +17,6 @@ class NormalizeTime:
                     # when zone info is not found, set to UTC
                     tz.activate(zoneinfo.ZoneInfo('UTC'))
             else:
-                tz.activate(zoneinfo.ZoneInfo('Asia/Calcutta'))
+                tz.activate(zoneinfo.ZoneInfo('Asia/Kolkata'))
         response = self.get_response(request)
         return response
