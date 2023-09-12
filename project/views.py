@@ -10,7 +10,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.all()
     permission_classes = [IsAuthenticatedOrReadOnly, CanModify]
     filter_backends = [filters.SearchFilter]
-    search_fields = ['project_name', 'project_owner__username']
+    search_fields = ['project_name', 'project_owner__username', 'project_description']
 
     def create(self, request, *args, **kwargs):
         data = request.data

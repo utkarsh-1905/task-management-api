@@ -1,7 +1,8 @@
 openapi: 3.0.3
 info:
   title: Task Management API
-  version: 0.0.0
+  version: 1.0.0
+  description: API for managing tasks
 paths:
   /api/login/:
     post:
@@ -549,7 +550,7 @@ paths:
       tags:
       - api
       security:
-      - {}
+      - jwtAuth: []
       responses:
         '200':
           content:
@@ -575,6 +576,8 @@ paths:
             schema:
               $ref: '#/components/schemas/User'
         required: true
+      security:
+      - jwtAuth: []
       responses:
         '201':
           content:
@@ -595,7 +598,7 @@ paths:
       tags:
       - api
       security:
-      - {}
+      - jwtAuth: []
       responses:
         '200':
           content:
@@ -626,6 +629,8 @@ paths:
             schema:
               $ref: '#/components/schemas/User'
         required: true
+      security:
+      - jwtAuth: []
       responses:
         '200':
           content:
@@ -655,6 +660,8 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/PatchedUser'
+      security:
+      - jwtAuth: []
       responses:
         '200':
           content:
@@ -673,6 +680,8 @@ paths:
         required: true
       tags:
       - api
+      security:
+      - jwtAuth: []
       responses:
         '204':
           description: No response body
@@ -739,6 +748,7 @@ components:
           type: string
           writeOnly: true
           maxLength: 128
+          minLength: 8
         username:
           type: string
           description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
@@ -870,6 +880,7 @@ components:
           type: string
           writeOnly: true
           maxLength: 128
+          minLength: 8
         username:
           type: string
           description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
@@ -888,7 +899,10 @@ components:
           title: Email address
           maxLength: 254
       required:
+      - email
+      - first_name
       - id
+      - last_name
       - password
       - username
   securitySchemes:

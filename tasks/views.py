@@ -16,7 +16,7 @@ class TasksViewSet(ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly, CanModify]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     filterset_fields = ['task_assignee__username', 'task_reviewer__username']
-    search_fields = ['task_name', 'task_project__project_name']
+    search_fields = ['task_name', 'task_project__project_name', 'task_description']
 
     def create(self, request, *args, **kwargs):
         data = request.data

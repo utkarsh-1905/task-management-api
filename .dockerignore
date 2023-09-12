@@ -1,0 +1,10 @@
+.coverage
+db.sqlite3
+report.html
+*.md
+.github/
+.pytest_cache/
+.ruff_cache/
+**/__pycache__/**
+**/migrations/**
+htmlcov/
